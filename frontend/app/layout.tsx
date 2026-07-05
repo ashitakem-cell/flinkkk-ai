@@ -4,25 +4,14 @@ import AppSidebar from "../components/ui/AppSidebar"
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="flex h-screen overflow-hidden">
-        {/* Sidebar */}
-        <div className="w-64 flex-shrink-0">
-          <AppSidebar />
-        </div>
-
-        {/* Content area */}
-        <div className="flex-1 flex flex-col overflow-y-auto">
-          {/* Header */}
-          <header className="h-16 border-b flex items-center justify-between px-8 bg-white flex-shrink-0">
-            <input 
-              type="text" 
-              placeholder="Search anything..." 
-              className="px-4 py-2 border rounded-md w-64 text-sm"
-            />
+      <body className="flex h-screen">
+        <AppSidebar />
+        <main className="flex-1 overflow-y-auto bg-gray-50">
+          <header className="h-16 border-b flex items-center px-8 bg-white">
+            <input type="text" placeholder="Search..." className="px-4 py-2 border rounded-md text-sm w-64" />
           </header>
-          
-          <main className="p-8">{children}</main>
-        </div>
+          <div className="p-8">{children}</div>
+        </main>
       </body>
     </html>
   )
