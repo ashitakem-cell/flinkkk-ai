@@ -4,7 +4,7 @@ import AppSidebar from "../components/ui/AppSidebar"
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="flex h-screen overflow-hidden">
+      <body className="flex h-screen bg-gray-50">
         {/* Sidebar Component */}
         <div className="w-64 flex-shrink-0">
           <AppSidebar />
