@@ -55,10 +55,8 @@ export default function Dashboard() {
           ))}
         </div>
       </div>
-    </div>
-  )
-}
-{/* Recent Activity Section */}
+
+      {/* Recent Activity Section */}
       <div className="space-y-4">
         <h2 className="text-xl font-semibold">Recent Activity</h2>
         <Card>
@@ -78,3 +76,6 @@ export default function Dashboard() {
           </CardContent>
         </Card>
       </div>
+    </div>
+  )
+}
