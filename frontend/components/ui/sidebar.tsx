@@ -1,6 +1,6 @@
 export default function AppSidebar() {
   return (
-    <aside className="w-64 bg-slate-900 text-white h-full p-6 flex flex-col">
+    <aside className="w-64 bg-slate-900 text-white h-screen p-6 flex flex-col">
       <h1 className="text-xl font-bold mb-8">Flinkk AI</h1>
       <nav className="space-y-4">
         {["Dashboard", "AI Employees", "Chat with AI", "Projects", "Calendar", "Tasks", "Knowledge Base", "Reports", "Integrations", "Team", "Settings"].map((item) => (
@@ -20,5 +20,5 @@ export default function AppSidebar() {
         </div>
       </div>
     </aside>
-  )
+  );
 }
