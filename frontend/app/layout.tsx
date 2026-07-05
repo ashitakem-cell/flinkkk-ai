@@ -1,5 +1,5 @@
-import "../app/globals.css";
-import AppSidebar from "../components/ui/AppSidebar";
+import "../app/globals.css"
+import Sidebar from "../components/ui/sidebar" // Yahan 'Sidebar' use kiya hai
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -7,10 +7,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex h-screen overflow-hidden bg-gray-50">
         {/* Sidebar */}
         <div className="w-64 shrink-0">
-          <AppSidebar />
+          <Sidebar />
         </div>
 
-        {/* Content Area */}
+        {/* Content */}
         <div className="flex-1 flex flex-col overflow-y-auto">
           <header className="h-16 border-b flex items-center justify-between px-8 bg-white shrink-0">
             <input 
@@ -19,11 +19,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               className="px-4 py-2 border rounded-md w-64 text-sm"
             />
           </header>
-          <main className="p-8">
-            {children}
-          </main>
+          <main className="p-8">{children}</main>
         </div>
       </body>
     </html>
-  );
+  )
 }
