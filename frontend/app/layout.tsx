@@ -1,3 +1,5 @@
+import "./globals.css" // Yeh line add karna zaruri hai
+
 export default function RootLayout({
   children,
 }: {
