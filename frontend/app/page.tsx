@@ -1,5 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Switch } from "@/components/ui/switch"
 
 export default function Dashboard() {
   return (
@@ -32,7 +34,22 @@ export default function Dashboard() {
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold">Your AI Employees</h2>
-          <span className="text-sm text-blue-600 cursor-pointer hover:underline">Manage Team →</span>
+          <Sheet>
+            <SheetTrigger className="text-sm text-blue-600 hover:underline">Manage Team →</SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle>Manage AI Employees</SheetTitle>
+              </SheetHeader>
+              <div className="mt-6 space-y-4">
+                {["RecruitAI", "InsightAI", "SalesPilot"].map((name) => (
+                  <div key={name} className="flex justify-between items-center p-4 border rounded-lg">
+                    <span className="font-medium">{name}</span>
+                    <Switch defaultChecked />
+                  </div>
+                ))}
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
 
         <div className="grid grid-cols-3 gap-4">
@@ -44,9 +61,7 @@ export default function Dashboard() {
             <Card key={i}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">{agent.name}</CardTitle>
-                <Badge variant="secondary" className="bg-green-100 text-green-700 hover:bg-green-100">
-                  ● {agent.status}
-                </Badge>
+                <Badge variant="secondary" className="bg-green-100 text-green-700">● {agent.status}</Badge>
               </CardHeader>
               <CardContent>
                 <p className="text-xs text-muted-foreground">{agent.role}</p>
