@@ -1,4 +1,5 @@
 import AIEmployeeCard from "../components/ui/AIEmployeeCard"
+import Link from 'next/link'
 
 export default function Dashboard() {
   return (
@@ -9,7 +10,7 @@ export default function Dashboard() {
         <p className="text-gray-600 mt-2">Your AI team is ready to help you grow your business.</p>
       </div>
 
-      {/* Stats Section (Dummy) */}
+      {/* Stats Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
           <p className="text-sm text-gray-500">Tasks Completed</p>
@@ -33,7 +34,9 @@ export default function Dashboard() {
       <div className="mt-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold">Your AI Employees</h2>
-          <button className="text-blue-600 text-sm font-medium hover:underline">Manage Team →</button>
+          <Link href="/team" className="text-blue-600 text-sm font-medium hover:underline">
+            Manage Team →
+          </Link>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
