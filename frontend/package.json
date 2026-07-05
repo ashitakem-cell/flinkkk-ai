@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start-all": "concurrently \"cd backend && node server.js\" \"cd frontend && npm run dev\""
+  "start-all": "concurrently \"cd ./backend && node server.js\" \"cd ./frontend && npm run dev\""
+}
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
