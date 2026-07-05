@@ -14,7 +14,7 @@ export default function AppSidebar() {
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center font-bold">A</div>
           <div>
-            <p className="text-sm font-bold">Ashita Sharma</p>
+            <p className="text-sm font-bold">Ashita </p>
             <p className="text-xs text-slate-400">Admin</p>
           </div>
         </div>
