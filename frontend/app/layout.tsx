@@ -1,16 +1,16 @@
-import "./globals.css"
-import AppSidebar from "@/components/ui/AppSidebar"
+import "../app/globals.css"
+import AppSidebar from "../components/ui/AppSidebar"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="flex h-screen overflow-hidden">
-        {/* Sidebar fix rahega */}
+        {/* Sidebar */}
         <div className="w-64 flex-shrink-0">
           <AppSidebar />
         </div>
 
-        {/* Content area scrollable hoga */}
+        {/* Content area */}
         <div className="flex-1 flex flex-col overflow-y-auto">
           {/* Header */}
           <header className="h-16 border-b flex items-center justify-between px-8 bg-white flex-shrink-0">
@@ -21,7 +21,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             />
           </header>
           
-          {/* Dashboard Main Content */}
           <main className="p-8">{children}</main>
         </div>
       </body>
