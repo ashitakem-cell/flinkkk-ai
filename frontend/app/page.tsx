@@ -58,3 +58,23 @@ export default function Dashboard() {
     </div>
   )
 }
+{/* Recent Activity Section */}
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">Recent Activity</h2>
+        <Card>
+          <CardContent className="p-0">
+            <div className="divide-y">
+              {[
+                { activity: "RecruitAI screened 5 new resumes", time: "2 min ago" },
+                { activity: "InsightAI generated Q2 report", time: "1 hour ago" },
+                { activity: "SalesPilot followed up with 12 leads", time: "3 hours ago" },
+              ].map((item, i) => (
+                <div key={i} className="flex justify-between p-4 hover:bg-slate-50">
+                  <p className="text-sm font-medium">{item.activity}</p>
+                  <p className="text-xs text-muted-foreground">{item.time}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
