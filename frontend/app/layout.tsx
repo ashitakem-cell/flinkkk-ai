@@ -1,30 +1,30 @@
 import "./globals.css"
+import AppSidebar from "@/components/ui/AppSidebar" // Tumhari existing file use kar rahe hain
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="flex min-h-screen">
-        {/* Sidebar */}
-        <aside className="w-64 bg-slate-900 text-white p-6 hidden md:block">
-          <h1 className="text-xl font-bold mb-8">Flinkk AI</h1>
-          <nav className="space-y-4">
-            {["Dashboard", "AI Employees", "Chat with AI", "Projects", "Calendar", "Tasks", "Knowledge Base", "Reports", "Integrations", "Team", "Settings"].map((item) => (
-              <div key={item} className="cursor-pointer hover:text-blue-400 font-medium">
-                {item}
-              </div>
-            ))}
-          </nav>
-          {/* Upgrade Section */}
-          <div className="mt-auto pt-20">
-            <div className="bg-blue-900 p-4 rounded-lg">
-              <p className="text-sm">Upgrade Plan</p>
-              <button className="bg-blue-600 text-white w-full mt-2 py-1 rounded text-sm">Upgrade Now</button>
-            </div>
-          </div>
-        </aside>
+        {/* Sidebar Component */}
+        <AppSidebar />
 
         {/* Main Content */}
-        <main className="flex-1 bg-gray-50">{children}</main>
+        <main className="flex-1 bg-gray-50">
+          {/* Yahan hum TopBar ka content directly daal rahe hain */}
+          <header className="h-16 border-b flex items-center justify-between px-8 bg-white">
+            <input 
+              type="text" 
+              placeholder="Search anything..." 
+              className="px-4 py-2 border rounded-md w-64 text-sm"
+            />
+            <div className="flex items-center gap-4">
+              <span className="text-sm font-medium cursor-pointer hover:underline">What's New</span>
+              <div className="w-8 h-8 bg-gray-200 rounded-full" />
+            </div>
+          </header>
+          
+          <div className="p-8">{children}</div>
+        </main>
       </body>
     </html>
   )
