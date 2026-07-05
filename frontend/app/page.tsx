@@ -1,29 +1,34 @@
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-6">
-      <h1 className="text-6xl font-bold mb-6">
-        FLINKKK AI
-      </h1>
+    <main className="min-h-screen bg-[#0B0F19] text-white">
+      {/* Hero Section */}
+      <section className="flex flex-col items-center justify-center text-center px-6 py-32">
+        <p className="text-blue-400 font-semibold mb-4">
+          🚀 AI Employees for Modern Businesses
+        </p>
 
-      <h2 className="text-3xl font-semibold text-center">
-        Your First AI Employee Platform
-      </h2>
+        <h1 className="text-6xl md:text-7xl font-extrabold leading-tight">
+          Hire AI Employees
+          <br />
+          That Never Sleep
+        </h1>
 
-      <p className="text-gray-400 text-center mt-6 max-w-2xl text-lg">
-        Hire AI Employees that can answer emails, schedule meetings,
-        analyze data, automate workflows, and work 24×7 without taking
-        a break.
-      </p>
+        <p className="mt-8 max-w-3xl text-gray-400 text-xl">
+          FLINKKK AI helps businesses automate recruitment,
+          sales, customer support, and business operations
+          using intelligent AI employees.
+        </p>
 
-      <div className="flex gap-4 mt-10">
-        <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-xl font-semibold">
-          Start Free
-        </button>
+        <div className="flex gap-5 mt-10">
+          <button className="bg-blue-600 px-7 py-4 rounded-xl hover:bg-blue-700 transition">
+            Get Started
+          </button>
 
-        <button className="border border-gray-500 px-6 py-3 rounded-xl font-semibold">
-          Book Demo
-        </button>
-      </div>
+          <button className="border border-gray-600 px-7 py-4 rounded-xl hover:bg-white hover:text-black transition">
+            Book Demo
+          </button>
+        </div>
+      </section>
     </main>
   );
 }
