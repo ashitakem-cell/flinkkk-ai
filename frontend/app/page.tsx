@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge"
 export default function Dashboard() {
   return (
     <div className="p-8 space-y-8">
-      {/* Heading */}
+      {/* Heading Section */}
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Good morning, Ashita! 👋</h1>
         <p className="text-muted-foreground">Your AI team is ready to help you grow your business.</p>
@@ -32,7 +32,7 @@ export default function Dashboard() {
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold">Your AI Employees</h2>
-          <span className="text-sm text-blue-600 cursor-pointer">Manage Team →</span>
+          <span className="text-sm text-blue-600 cursor-pointer hover:underline">Manage Team →</span>
         </div>
 
         <div className="grid grid-cols-3 gap-4">
@@ -44,7 +44,9 @@ export default function Dashboard() {
             <Card key={i}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">{agent.name}</CardTitle>
-                <Badge variant="secondary" className="bg-green-100 text-green-700">● {agent.status}</Badge>
+                <Badge variant="secondary" className="bg-green-100 text-green-700 hover:bg-green-100">
+                  ● {agent.status}
+                </Badge>
               </CardHeader>
               <CardContent>
                 <p className="text-xs text-muted-foreground">{agent.role}</p>
