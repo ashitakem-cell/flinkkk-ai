@@ -1,34 +1,58 @@
-export default function Home() {
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+
+export default function Dashboard() {
   return (
-    <main className="min-h-screen bg-[#0B0F19] text-white">
-      {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center text-center px-6 py-32">
-        <p className="text-blue-400 font-semibold mb-4">
-          🚀 AI Employees for Modern Businesses
-        </p>
+    <div className="p-8 space-y-8">
+      {/* Heading */}
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">Good morning, Ashita! 👋</h1>
+        <p className="text-muted-foreground">Your AI team is ready to help you grow your business.</p>
+      </div>
 
-        <h1 className="text-6xl md:text-7xl font-extrabold leading-tight">
-          Hire AI Employees
-          <br />
-          That Never Sleep
-        </h1>
+      {/* Metrics Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {[
+          { title: "Tasks Completed", value: "128", trend: "+18% from last week" },
+          { title: "Hours Saved", value: "56.4", trend: "+24% from last week" },
+          { title: "Candidates Processed", value: "342", trend: "+22% from last week" },
+          { title: "Leads Contacted", value: "627", trend: "+15% from last week" },
+        ].map((stat, i) => (
+          <Card key={i}>
+            <CardContent className="p-6">
+              <p className="text-sm font-medium text-muted-foreground">{stat.title}</p>
+              <h2 className="text-3xl font-bold mt-2">{stat.value}</h2>
+              <p className="text-xs text-green-500 mt-1">{stat.trend}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
 
-        <p className="mt-8 max-w-3xl text-gray-400 text-xl">
-          FLINKKK AI helps businesses automate recruitment,
-          sales, customer support, and business operations
-          using intelligent AI employees.
-        </p>
-
-        <div className="flex gap-5 mt-10">
-          <button className="bg-blue-600 px-7 py-4 rounded-xl hover:bg-blue-700 transition">
-            Get Started
-          </button>
-
-          <button className="border border-gray-600 px-7 py-4 rounded-xl hover:bg-white hover:text-black transition">
-            Book Demo
-          </button>
+      {/* AI Employees Section */}
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-semibold">Your AI Employees</h2>
+          <span className="text-sm text-blue-600 cursor-pointer">Manage Team →</span>
         </div>
-      </section>
-    </main>
-  );
+
+        <div className="grid grid-cols-3 gap-4">
+          {[
+            { name: "RecruitAI", role: "HR Specialist", status: "Active" },
+            { name: "InsightAI", role: "Data Analyst", status: "Active" },
+            { name: "SalesPilot", role: "Sales Assistant", status: "Active" },
+          ].map((agent, i) => (
+            <Card key={i}>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">{agent.name}</CardTitle>
+                <Badge variant="secondary" className="bg-green-100 text-green-700">● {agent.status}</Badge>
+              </CardHeader>
+              <CardContent>
+                <p className="text-xs text-muted-foreground">{agent.role}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
 }
