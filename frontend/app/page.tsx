@@ -32,7 +32,7 @@ export default function Dashboard() {
             ))}
           </div>
 
-          {/* AI Employees */}
+          {/* AI Employees Section */}
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold">Your AI Employees</h2>
@@ -63,6 +63,14 @@ export default function Dashboard() {
                 </Card>
               ))}
             </div>
+
+            {/* Hire New AI Employee Button */}
+            <Card className="border-dashed border-2 flex items-center justify-center py-6 cursor-pointer hover:bg-slate-50">
+              <div className="flex items-center gap-2 text-blue-600">
+                <span className="text-xl">+</span>
+                <span className="font-medium">Hire New AI Employee</span>
+              </div>
+            </Card>
           </div>
         </div>
 
