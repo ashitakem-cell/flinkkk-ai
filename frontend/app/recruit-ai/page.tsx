@@ -11,9 +11,7 @@ export default function RecruitAIPage() {
     formData.append('resume', file);
 
     // Dynamic URL creation (Port 3000 -> 5000)
-    const baseUrl = window.location.origin.replace(/:3000|-[0-9]+\.app\.github\.dev/, (match) => {
-      return match.includes('3000') ? ':5000' : '-5000.app.github.dev';
-    });
+    const baseUrl = window.location.origin.replace('-3000', '-5000');
 
     try {
       const res = await fetch(`${baseUrl}/api/recruit/upload-resume`, { 
@@ -21,11 +19,17 @@ export default function RecruitAIPage() {
         body: formData 
       });
       
-      const data = await res.json();
-      alert(data.message);
+      // JSON response check
+      const text = await res.text();
+      try {
+        const data = JSON.parse(text);
+        alert(data.message);
+      } catch (e) {
+        throw new Error(text); // Agar response HTML hai to error dikh jayega
+      }
     } catch (error) {
       console.error(error);
-      alert("Error: Backend se connection nahi ho paya. Console check karo (F12).");
+      alert("Error: " + error);
     }
   };
 
