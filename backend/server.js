@@ -1,24 +1,20 @@
 const express = require('express');
+const multer = require('multer');
 const cors = require('cors');
 const app = express();
 
-// Middleware
-app.use(cors()); // Ye enable karna zaroori hai taaki Frontend aur Backend baat kar sakein
-app.use(express.json()); // JSON data handle karne ke liye
+app.use(cors());
+const upload = multer({ dest: 'uploads/' }); // Files is folder mein save hongi
 
-// Routes
-app.get('/', (req, res) => {
-    res.send("FLINKK AI Backend is Running 🚀");
+app.post('/api/recruit/upload-resume', upload.single('resume'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: 'File nahi mili!' });
+  }
+  
+  // Yahan tum AI processing logic laga sakti ho
+  console.log('File receive ho gayi:', req.file.originalname);
+  
+  res.json({ message: 'Resume successfully upload ho gaya!' });
 });
 
-// RecruitAI Route
-app.post('/api/recruit/upload-resume', (req, res) => {
-    console.log("Resume mil gaya!");
-    res.json({ message: "Resume upload successful and under review by RecruitAI" });
-});
-
-// Server Start
-const PORT = 5000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+app.listen(5000, () => console.log('Backend port 5000 par chal raha hai'));
