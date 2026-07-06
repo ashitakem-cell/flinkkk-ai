@@ -10,7 +10,7 @@ export default function RecruitAIPage() {
     const formData = new FormData();
     formData.append('resume', file);
 
-    // Direct URL use karo (replace 3000 with 5000)
+    // Dynamic URL for Codespaces
     const backendUrl = window.location.origin.replace('-3000', '-5000');
 
     try {
@@ -19,13 +19,32 @@ export default function RecruitAIPage() {
         body: formData 
       });
       
+      if (!res.ok) throw new Error('Network response was not ok');
+      
       const data = await res.json();
       alert(data.message);
     } catch (error) {
       console.error(error);
-      alert("Error: Server se baat nahi ho pa rahi!");
+      alert("Error: Backend se connection nahi ho paya!");
     }
   };
 
-  // ... baaki JSX wahi rahega
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-6">RecruitAI - Resume Screening</h1>
+      <div className="bg-white p-6 rounded-xl border shadow-sm max-w-lg">
+        <input 
+          type="file" 
+          onChange={(e) => e.target.files && setFile(e.target.files[0])}
+          className="mb-4 block w-full"
+        />
+        <button 
+          onClick={uploadResume}
+          className="w-full bg-black text-white py-2.5 rounded-lg font-medium"
+        >
+          Screen Resume
+        </button>
+      </div>
+    </div>
+  );
 }
