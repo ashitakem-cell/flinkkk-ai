@@ -1,8 +1,11 @@
 {
-  "dependencies": {
-    "cors": "^2.8.6"
+  "name": "flinkkk-ai-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start-all": "concurrently \"cd backend && node server.js\" \"cd frontend && npm run dev\""
   },
   "devDependencies": {
-    "concurrently": "^10.0.3"
+    "concurrently": "^8.2.0"
   }
 }
