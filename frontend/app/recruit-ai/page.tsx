@@ -5,17 +5,22 @@ export default function RecruitAIPage() {
   const [file, setFile] = useState<File | null>(null);
 
   const uploadResume = async () => {
-    if (!file) return alert("Please select a file first.");
+    if (!file) return alert("Pehle file select karo!");
     
     const formData = new FormData();
     formData.append('resume', file);
 
+    // Ye trick Codespaces ke liye hai: port 3000 ko 5000 se badal do
+    const currentUrl = window.location.origin; 
+    const backendUrl = currentUrl.replace('-3000', '-5000');
+
     try {
-      // Relative path use karo, Next.js config handle kar legi
-      const res = await fetch('/api/recruit/upload-resume', { 
+      const res = await fetch(`${backendUrl}/api/recruit/upload-resume`, { 
         method: 'POST',
         body: formData 
       });
+      
+      if (!res.ok) throw new Error('Backend response not ok');
       
       const data = await res.json();
       alert(data.message);
@@ -36,7 +41,7 @@ export default function RecruitAIPage() {
         />
         <button 
           onClick={uploadResume}
-          className="w-full bg-black text-white py-2.5 rounded-lg font-medium hover:bg-gray-800"
+          className="w-full bg-black text-white py-2.5 rounded-lg font-medium"
         >
           Screen Resume
         </button>
