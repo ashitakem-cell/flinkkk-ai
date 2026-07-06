@@ -1,39 +1,44 @@
 'use client'
+import { useState } from 'react';
 
 export default function RecruitAIPage() {
-  const testConnection = async () => {
+  const [file, setFile] = useState<File | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) setFile(e.target.files[0]);
+  };
+
+  const uploadResume = async () => {
+    if (!file) return alert("Pehle file select karo!");
+    
+    const formData = new FormData();
+    formData.append('resume', file);
+
     try {
       const res = await fetch('http://localhost:5000/api/recruit/upload-resume', { 
-        method: 'POST' 
+        method: 'POST',
+        body: formData 
       });
       const data = await res.json();
       alert(data.message);
     } catch (error) {
-      alert("Backend se connect nahi ho paya. Check karo ki node server.js chal raha hai ya nahi.");
+      alert("Error: Backend se connect nahi ho paya.");
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto">
-        {/* Header Section */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">RecruitAI</h1>
-          <p className="text-gray-500 mt-2">Resume screening aur candidate management simplified.</p>
-        </div>
-
-        {/* Main Action Card */}
-        <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-lg">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800">Upload New Resume</h2>
-          <p className="text-sm text-gray-600 mb-6">
-            System check karne ke liye niche click karein. Backend response screen par dikhega.
-          </p>
+        <h1 className="text-3xl font-bold mb-6">RecruitAI: Upload Resume</h1>
+        
+        <div className="bg-white p-10 rounded-3xl border border-gray-200 shadow-xl">
+          <input type="file" onChange={handleFileChange} className="mb-6 block" />
           
           <button 
-            onClick={testConnection}
-            className="bg-black text-white px-6 py-3 rounded-xl font-medium hover:bg-gray-800 transition-all shadow-md active:scale-95"
+            onClick={uploadResume}
+            className="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all"
           >
-            Test Backend Connection
+            Start Screening
           </button>
         </div>
       </div>
