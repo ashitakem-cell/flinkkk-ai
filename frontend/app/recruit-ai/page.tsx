@@ -10,8 +10,10 @@ export default function RecruitAIPage() {
     const formData = new FormData();
     formData.append('resume', file);
 
-    // Ye trick Codespaces ke URL se 3000 hata kar 5000 laga degi
-    const baseUrl = window.location.origin.replace('-3000', '-5000');
+    // Ye trick automatically port 3000 ko 5000 mein badal degi
+    const baseUrl = window.location.origin.replace(/:3000|-[0-9]+\.app\.github\.dev/, (match) => {
+      return match.includes('3000') ? ':5000' : '-5000.app.github.dev';
+    });
 
     try {
       const res = await fetch(`${baseUrl}/api/recruit/upload-resume`, { 
@@ -22,14 +24,27 @@ export default function RecruitAIPage() {
       const data = await res.json();
       alert(data.message);
     } catch (error) {
-      alert("Error: Backend se connect nahi ho paya!");
+      console.error(error);
+      alert("Error: Backend se connection nahi ho paya!");
     }
   };
 
   return (
     <div className="p-8">
-      <input type="file" onChange={(e) => e.target.files && setFile(e.target.files[0])} />
-      <button onClick={uploadResume} className="bg-black text-white p-2">Screen Resume</button>
+      <h1 className="text-2xl font-bold mb-6">RecruitAI - Resume Screening</h1>
+      <div className="bg-white p-6 rounded-xl border shadow-sm max-w-lg">
+        <input 
+          type="file" 
+          onChange={(e) => e.target.files && setFile(e.target.files[0])}
+          className="mb-4 block w-full"
+        />
+        <button 
+          onClick={uploadResume}
+          className="w-full bg-black text-white py-2.5 rounded-lg font-medium"
+        >
+          Screen Resume
+        </button>
+      </div>
     </div>
   );
 }
