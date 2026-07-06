@@ -1,6 +1,7 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  // Filhal ke liye isse empty chhod do, warnings chale jayenge
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  // rewrites hata diya hai taaki koi conflict na ho
 };
 
 export default nextConfig;
