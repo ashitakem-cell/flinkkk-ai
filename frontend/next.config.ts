@@ -1,10 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    turbopack: {
-      root: "../", // Ye tumhare project ke root ko point karega
-    },
-  },
+  // Filhal ke liye isse empty chhod do, warnings chale jayenge
 };
 
 export default nextConfig;
