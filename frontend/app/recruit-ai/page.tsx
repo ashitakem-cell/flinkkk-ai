@@ -10,20 +10,20 @@ export default function RecruitAIPage() {
     const formData = new FormData();
     formData.append('resume', file);
 
-    // Dynamic URL for Codespaces (Port 3000 to 5000 redirect)
-    const backendUrl = window.location.origin.replace('-3000', '-5000');
-
     try {
-      const res = await fetch(`${backendUrl}/api/recruit/upload-resume`, { 
+      // Relative path ka use karo, rewrites ise localhost:5000 par bhej dega
+      const res = await fetch('/api/recruit/upload-resume', { 
         method: 'POST',
         body: formData 
       });
+      
+      if (!res.ok) throw new Error('Upload failed');
       
       const data = await res.json();
       alert(data.message);
     } catch (error) {
       console.error(error);
-      alert("Error: Backend se connect nahi ho paya. Port 5000 Public hai na?");
+      alert("Error: Backend connect nahi ho paya!");
     }
   };
 
@@ -38,7 +38,7 @@ export default function RecruitAIPage() {
         />
         <button 
           onClick={uploadResume}
-          className="w-full bg-black text-white py-2.5 rounded-lg font-medium hover:bg-gray-800"
+          className="w-full bg-black text-white py-2.5 rounded-lg font-medium"
         >
           Screen Resume
         </button>
