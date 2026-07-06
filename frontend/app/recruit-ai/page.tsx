@@ -4,13 +4,10 @@ import { useState } from 'react';
 export default function RecruitAIPage() {
   const [file, setFile] = useState<File | null>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) setFile(e.target.files[0]);
-  };
-
   const uploadResume = async () => {
-    if (!file) return alert("Pehle file select karo!");
+    if (!file) return alert("Kripya pehle resume file select karein.");
     
+    // Yahan hum file ko backend par bhejenge
     const formData = new FormData();
     formData.append('resume', file);
 
@@ -22,25 +19,30 @@ export default function RecruitAIPage() {
       const data = await res.json();
       alert(data.message);
     } catch (error) {
-      alert("Error: Backend se connect nahi ho paya.");
+      alert("Error: Backend se connection nahi ho paya.");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">RecruitAI: Upload Resume</h1>
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-6">RecruitAI - Resume Screening</h1>
+      
+      <div className="bg-white p-6 rounded-xl border shadow-sm max-w-lg">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Candidate Resume Upload karein
+        </label>
+        <input 
+          type="file" 
+          onChange={(e) => e.target.files && setFile(e.target.files[0])}
+          className="block w-full text-sm text-gray-500 mb-4 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+        />
         
-        <div className="bg-white p-10 rounded-3xl border border-gray-200 shadow-xl">
-          <input type="file" onChange={handleFileChange} className="mb-6 block" />
-          
-          <button 
-            onClick={uploadResume}
-            className="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all"
-          >
-            Start Screening
-          </button>
-        </div>
+        <button 
+          onClick={uploadResume}
+          className="w-full bg-black text-white py-2.5 rounded-lg font-medium hover:bg-gray-800 transition-colors"
+        >
+          Screen Resume
+        </button>
       </div>
     </div>
   );
