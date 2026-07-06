@@ -5,29 +5,42 @@ export default function RecruitAIPage() {
   const [file, setFile] = useState<File | null>(null);
 
   const uploadResume = async () => {
-    if (!file) return alert("Pehle file select karo!");
-
+    if (!file) return alert("Please select a file first.");
+    
     const formData = new FormData();
     formData.append('resume', file);
 
-    // GitHub Codespaces ka dynamic URL (Port 5000 ka)
-    const backendUrl = window.location.origin.replace('-3000', '-5000');
-    
     try {
-      const res = await fetch(`${backendUrl}/api/recruit/upload-resume`, {
+      // Relative path use karo, Next.js config handle kar legi
+      const res = await fetch('/api/recruit/upload-resume', { 
         method: 'POST',
-        body: formData,
+        body: formData 
       });
-
-      if (!res.ok) throw new Error('Upload fail ho gaya');
       
       const data = await res.json();
       alert(data.message);
     } catch (error) {
       console.error(error);
-      alert("Error: Backend se connect nahi ho paya. Check karo ki Port 5000 'Public' hai.");
+      alert("Error: Failed to connect to the backend.");
     }
   };
 
-  // ... baaki return JSX code wahi rahega
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-6">RecruitAI - Resume Screening</h1>
+      <div className="bg-white p-6 rounded-xl border shadow-sm max-w-lg">
+        <input 
+          type="file" 
+          onChange={(e) => e.target.files && setFile(e.target.files[0])}
+          className="mb-4 block w-full"
+        />
+        <button 
+          onClick={uploadResume}
+          className="w-full bg-black text-white py-2.5 rounded-lg font-medium hover:bg-gray-800"
+        >
+          Screen Resume
+        </button>
+      </div>
+    </div>
+  );
 }
