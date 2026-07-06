@@ -10,20 +10,22 @@ export default function RecruitAIPage() {
     const formData = new FormData();
     formData.append('resume', file);
 
+    // Dynamic URL creation (Port 3000 -> 5000)
+    const baseUrl = window.location.origin.replace(/:3000|-[0-9]+\.app\.github\.dev/, (match) => {
+      return match.includes('3000') ? ':5000' : '-5000.app.github.dev';
+    });
+
     try {
-      // Relative path ka use karo, rewrites ise localhost:5000 par bhej dega
-      const res = await fetch('/api/recruit/upload-resume', { 
+      const res = await fetch(`${baseUrl}/api/recruit/upload-resume`, { 
         method: 'POST',
         body: formData 
       });
-      
-      if (!res.ok) throw new Error('Upload failed');
       
       const data = await res.json();
       alert(data.message);
     } catch (error) {
       console.error(error);
-      alert("Error: Backend connect nahi ho paya!");
+      alert("Error: Backend se connection nahi ho paya. Console check karo (F12).");
     }
   };
 
