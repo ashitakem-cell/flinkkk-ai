@@ -1,40 +1,41 @@
+'use client'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function AppSidebar() {
+  const pathname = usePathname()
+
+  const navLinks = [
+    { name: 'Dashboard', path: '/' },
+    { name: 'RecruitAI', path: '/recruit-ai' },
+    { name: 'AI Employees', path: '/ai-employees' },
+    { name: 'Chat with AI', path: '/chat' },
+    { name: 'Projects', path: '/projects' },
+    { name: 'Calendar', path: '/calendar' },
+    { name: 'Tasks', path: '/tasks' },
+    { name: 'Team', path: '/team' },
+  ]
+
   return (
-    <div className="w-64 bg-[#0B1221] text-white h-screen p-6 fixed">
+    <div className="w-64 bg-[#0B1221] text-white h-screen p-6 fixed left-0 top-0">
       <h1 className="text-2xl font-bold mb-10">Flinkk AI</h1>
       
-      <nav className="space-y-4">
-        <Link href="/" className="block p-2 hover:bg-gray-800 rounded transition-colors">
-          Dashboard
-        </Link>
-        <Link href="#" className="block p-2 hover:bg-gray-800 rounded transition-colors">
-          AI Employees
-        </Link>
-        <Link href="#" className="block p-2 hover:bg-gray-800 rounded transition-colors">
-          Chat with AI
-        </Link>
-        <Link href="/projects" className="block p-2 hover:bg-gray-800 rounded transition-colors">
-          Projects
-        </Link>
-        <Link href="#" className="block p-2 hover:bg-gray-800 rounded transition-colors">
-          Calendar
-        </Link>
-        <Link href="#" className="block p-2 hover:bg-gray-800 rounded transition-colors">
-          Tasks
-        </Link>
-        <Link href="/team" className="block p-2 hover:bg-gray-800 rounded transition-colors">
-          Team
-        </Link>
+      <nav className="space-y-2">
+        {navLinks.map((link) => {
+          const isActive = pathname === link.path
+          return (
+            <Link 
+              key={link.path}
+              href={link.path} 
+              className={`block p-3 rounded-lg transition-colors ${
+                isActive ? 'bg-gray-800 border-l-4 border-white' : 'hover:bg-gray-800'
+              }`}
+            >
+              {link.name}
+            </Link>
+          )
+        })}
       </nav>
-
-      <div className="absolute bottom-6 left-6">
-        <div className="text-sm">
-          <p className="font-bold">Ashita</p>
-          <p className="text-gray-400">Admin</p>
-        </div>
-      </div>
     </div>
   )
 }
