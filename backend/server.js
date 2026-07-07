@@ -2,13 +2,10 @@ const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
 const fs = require('fs');
-const pdf = require('pdf-parse');
+const pdf = require('pdf-parse'); // Import yahi rahega
 
 const app = express();
-
-// CORS ko har jagah allow karo taaki frontend block na ho
-app.use(cors({ origin: '*' })); 
-
+app.use(cors({ origin: '*' }));
 const upload = multer({ dest: 'uploads/' });
 
 app.post('/api/recruit/upload-resume', upload.single('resume'), async (req, res) => {
@@ -16,9 +13,11 @@ app.post('/api/recruit/upload-resume', upload.single('resume'), async (req, res)
 
   try {
     const dataBuffer = fs.readFileSync(req.file.path);
+    
+    // Yahan galti ho rahi thi. Hum callback ki jagah direct function call karenge
     const data = await pdf(dataBuffer);
     
-    fs.unlinkSync(req.file.path); // Temporary file delete karo
+    fs.unlinkSync(req.file.path); // Cleanup
 
     res.status(200).json({ 
       success: true, 
@@ -26,7 +25,7 @@ app.post('/api/recruit/upload-resume', upload.single('resume'), async (req, res)
     });
   } catch (error) {
     console.error("PDF Parsing Error:", error);
-    res.status(500).json({ success: false, message: 'PDF parsing mein error aaya!' });
+    res.status(500).json({ success: false, message: 'Parsing failed!' });
   }
 });
 

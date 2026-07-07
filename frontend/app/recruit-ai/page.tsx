@@ -12,7 +12,7 @@ export default function RecruitAIPage() {
     const formData = new FormData();
     formData.append('resume', file);
 
-    // Codespaces ka magic URL logic
+    // Dynamic URL
     const baseUrl = window.location.origin.replace('-3000', '-5000');
 
     try {
@@ -24,7 +24,7 @@ export default function RecruitAIPage() {
       const data = await res.json();
       if (res.ok && data.success) {
         alert("Success! Text extract ho gaya.");
-        console.log(data.text);
+        console.log("Parsed text:", data.text);
       } else {
         alert("Error: " + data.message);
       }
