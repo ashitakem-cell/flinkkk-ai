@@ -3,36 +3,35 @@ const multer = require('multer');
 const cors = require('cors');
 const fs = require('fs');
 
-// Library ko aise require karo
-const pdfParseLib = require('pdf-parse');
+// Import yahi rakho
+const pdf = require('pdf-parse');
 
 const app = express();
 app.use(cors({ origin: '*' }));
 const upload = multer({ dest: 'uploads/' });
 
 app.post('/api/recruit/upload-resume', upload.single('resume'), async (req, res) => {
-    if (!req.file) return res.status(400).json({ message: "No file uploaded" });
+    if (!req.file) return res.status(400).json({ message: "No file" });
 
     try {
         const dataBuffer = fs.readFileSync(req.file.path);
         
-        // Yahan 'pdf-parse' ka structure check karte hue call karo
-        // Tumhare output mein 'PDFParse' class dikh rahi hai
-        const data = await pdfParse(dataBuffer); 
+        // YE LINE SABSE ZAROORI HAI: 
+        // Agar pdf ek function nahi hai, toh uska 'default' property use karo
+        const pdfFunction = (typeof pdf === 'function') ? pdf : pdf.default;
+        
+        if (!pdfFunction) {
+            throw new Error("PDF library could not be initialized as a function");
+        }
+
+        const data = await pdfFunction(dataBuffer);
         
         fs.unlinkSync(req.file.path);
         res.json({ success: true, text: data.text });
     } catch (err) {
-        // Agar fir bhi error aaye, to PDFParse class ko manually try karenge
-        try {
-            const data = await new pdfParse.PDFParse(fs.readFileSync(req.file.path));
-            fs.unlinkSync(req.file.path);
-            res.json({ success: true, text: data.text });
-        } catch (innerErr) {
-            console.error("Critical:", innerErr);
-            res.status(500).json({ message: "Parsing failed" });
-        }
+        console.error("DEBUG ERROR:", err);
+        res.status(500).json({ message: "Parsing failed: " + err.message });
     }
 });
 
-app.listen(5000, () => console.log('Backend running on 5000'));
+app.listen(5000, () => console.log('Server running on 5000'));
