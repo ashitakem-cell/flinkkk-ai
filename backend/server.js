@@ -2,10 +2,13 @@ const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
 const fs = require('fs');
-const pdf = require('pdf-parse'); // Yahi sahi import hai
+const pdf = require('pdf-parse');
 
 const app = express();
-app.use(cors({ origin: '*' }));
+
+// CORS ko har jagah allow karo taaki frontend block na ho
+app.use(cors({ origin: '*' })); 
+
 const upload = multer({ dest: 'uploads/' });
 
 app.post('/api/recruit/upload-resume', upload.single('resume'), async (req, res) => {
@@ -13,12 +16,9 @@ app.post('/api/recruit/upload-resume', upload.single('resume'), async (req, res)
 
   try {
     const dataBuffer = fs.readFileSync(req.file.path);
-    
-    // PDF Parse process
     const data = await pdf(dataBuffer);
     
-    // File delete (Cleanup)
-    fs.unlinkSync(req.file.path); 
+    fs.unlinkSync(req.file.path); // Temporary file delete karo
 
     res.status(200).json({ 
       success: true, 
@@ -26,7 +26,7 @@ app.post('/api/recruit/upload-resume', upload.single('resume'), async (req, res)
     });
   } catch (error) {
     console.error("PDF Parsing Error:", error);
-    res.status(500).json({ success: false, message: 'Parsing failed!' });
+    res.status(500).json({ success: false, message: 'PDF parsing mein error aaya!' });
   }
 });
 

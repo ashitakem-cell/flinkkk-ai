@@ -3,7 +3,6 @@ import { useState } from 'react';
 
 export default function RecruitAIPage() {
   const [file, setFile] = useState<File | null>(null);
-  const [resumeText, setResumeText] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
   const uploadResume = async () => {
@@ -13,6 +12,7 @@ export default function RecruitAIPage() {
     const formData = new FormData();
     formData.append('resume', file);
 
+    // Codespaces ka magic URL logic
     const baseUrl = window.location.origin.replace('-3000', '-5000');
 
     try {
@@ -22,11 +22,11 @@ export default function RecruitAIPage() {
       });
       
       const data = await res.json();
-      
       if (res.ok && data.success) {
-        setResumeText(data.text);
+        alert("Success! Text extract ho gaya.");
+        console.log(data.text);
       } else {
-        alert("Error: " + (data.message || "Failed"));
+        alert("Error: " + data.message);
       }
     } catch (error) {
       alert("Backend connection failed!");
@@ -37,20 +37,15 @@ export default function RecruitAIPage() {
 
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">RecruitAI - Parser</h1>
-      <div className="bg-white p-6 rounded-xl border shadow-sm max-w-lg mb-6">
-        <input type="file" onChange={(e) => e.target.files && setFile(e.target.files[0])} className="mb-4 block w-full" />
-        <button onClick={uploadResume} disabled={loading} className="bg-black text-white py-2.5 px-4 rounded-lg">
-          {loading ? "Parsing..." : "Screen Resume"}
-        </button>
-      </div>
-
-      {resumeText && (
-        <div className="bg-gray-50 p-6 rounded-xl border">
-          <h2 className="font-bold mb-2">Parsed Text:</h2>
-          <pre className="whitespace-pre-wrap text-sm">{resumeText.substring(0, 1000)}...</pre>
-        </div>
-      )}
+      <h1 className="text-2xl font-bold mb-6">RecruitAI</h1>
+      <input type="file" onChange={(e) => e.target.files && setFile(e.target.files[0])} />
+      <button 
+        onClick={uploadResume} 
+        disabled={loading}
+        className="bg-black text-white px-4 py-2 mt-4 block rounded"
+      >
+        {loading ? "Parsing..." : "Screen Resume"}
+      </button>
     </div>
   );
 }
