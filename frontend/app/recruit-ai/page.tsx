@@ -26,11 +26,10 @@ export default function RecruitAIPage() {
       if (res.ok && data.success) {
         setResumeText(data.text);
       } else {
-        throw new Error(data.message || "Failed to parse");
+        alert("Error: " + (data.message || "Failed"));
       }
     } catch (error) {
-      console.error(error);
-      alert("Error: " + (error instanceof Error ? error.message : "Parsing failed!"));
+      alert("Backend connection failed!");
     } finally {
       setLoading(false);
     }
@@ -38,26 +37,17 @@ export default function RecruitAIPage() {
 
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">RecruitAI: Resume Parser</h1>
-      
+      <h1 className="text-2xl font-bold mb-6">RecruitAI - Parser</h1>
       <div className="bg-white p-6 rounded-xl border shadow-sm max-w-lg mb-6">
-        <input 
-          type="file" 
-          onChange={(e) => e.target.files && setFile(e.target.files[0])}
-          className="mb-4 block w-full"
-        />
-        <button 
-          onClick={uploadResume}
-          disabled={loading}
-          className="w-full bg-black text-white py-2.5 rounded-lg font-medium"
-        >
+        <input type="file" onChange={(e) => e.target.files && setFile(e.target.files[0])} className="mb-4 block w-full" />
+        <button onClick={uploadResume} disabled={loading} className="bg-black text-white py-2.5 px-4 rounded-lg">
           {loading ? "Parsing..." : "Screen Resume"}
         </button>
       </div>
 
       {resumeText && (
-        <div className="bg-gray-50 p-6 rounded-lg border">
-          <h2 className="font-bold mb-2">Extracted Text:</h2>
+        <div className="bg-gray-50 p-6 rounded-xl border">
+          <h2 className="font-bold mb-2">Parsed Text:</h2>
           <pre className="whitespace-pre-wrap text-sm">{resumeText.substring(0, 1000)}...</pre>
         </div>
       )}

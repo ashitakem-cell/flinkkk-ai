@@ -2,38 +2,31 @@ const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
 const fs = require('fs');
-const pdf = require('pdf-parse');
+const pdf = require('pdf-parse'); // Yahi sahi import hai
 
 const app = express();
 app.use(cors({ origin: '*' }));
-// Temporary upload folder
 const upload = multer({ dest: 'uploads/' });
 
 app.post('/api/recruit/upload-resume', upload.single('resume'), async (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ success: false, message: 'No file uploaded' });
-  }
+  if (!req.file) return res.status(400).json({ success: false, message: 'File nahi mili!' });
 
   try {
-    // File read karo
     const dataBuffer = fs.readFileSync(req.file.path);
     
-    // PDF Parse karo
+    // PDF Parse process
     const data = await pdf(dataBuffer);
     
-    // Cleanup: File delete karo
-    fs.unlinkSync(req.file.path);
+    // File delete (Cleanup)
+    fs.unlinkSync(req.file.path); 
 
     res.status(200).json({ 
       success: true, 
       text: data.text 
     });
   } catch (error) {
-    console.error("Critical Parsing Error:", error);
-    // Agar file bach gayi ho toh cleanup karo
-    if (req.file.path && fs.existsSync(req.file.path)) fs.unlinkSync(req.file.path);
-    
-    res.status(500).json({ success: false, message: 'PDF parsing failed' });
+    console.error("PDF Parsing Error:", error);
+    res.status(500).json({ success: false, message: 'Parsing failed!' });
   }
 });
 
