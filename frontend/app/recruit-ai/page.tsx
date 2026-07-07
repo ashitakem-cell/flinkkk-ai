@@ -20,7 +20,7 @@ export default function RecruitAIPage() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/recruit/upload-resume",
+        "https://opulent-space-robot-p777rxqrq4pwhrrj7-5000.app.github.dev/",
         {
           method: "POST",
           body: formData,
