@@ -4,12 +4,10 @@ import { useState } from "react";
 
 export default function RecruitAIPage() {
   const [file, setFile] = useState<File | null>(null);
-  const [analysis, setAnalysis] = useState<string>("");
+  const [analysis, setAnalysis] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleAnalyze = async () => {
-    console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
-
     if (!file) {
       alert("Please select a resume first.");
       return;
@@ -20,37 +18,44 @@ export default function RecruitAIPage() {
     const formData = new FormData();
     formData.append("resume", file);
 
+    const url = "/api/upload";
+
+    console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
+    console.log("Sending request to:", url);
+
     try {
-      const url = `${process.env.NEXT_PUBLIC_API_URL}/api/recruit/upload-resume`;
-
-      console.log("Sending request to:", url);
-
       const response = await fetch(url, {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
 
       console.log("Response Status:", response.status);
 
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
       const data = await response.json();
 
-      console.log("Response Data:", data);
+      console.log("Backend Response:", data);
 
       if (data.success) {
         setAnalysis(data.text);
       } else {
-        alert("Analysis failed");
+        alert(data.message || "Analysis Failed");
       }
     } catch (error) {
       console.error("Fetch Error:", error);
       alert("Backend connection failed");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
     <div className="p-8 max-w-6xl mx-auto">
+
       <h1 className="text-4xl font-bold mb-2">
         RecruitAI
       </h1>
@@ -62,6 +67,7 @@ export default function RecruitAIPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
         {/* Upload Card */}
+
         <div className="bg-white rounded-xl shadow border p-6">
 
           <h2 className="text-2xl font-semibold mb-5">
@@ -93,7 +99,7 @@ export default function RecruitAIPage() {
               </p>
 
               <p className="text-gray-500">
-                PDF upto 10MB
+                PDF up to 10MB
               </p>
 
             </label>
@@ -111,7 +117,7 @@ export default function RecruitAIPage() {
           <button
             onClick={handleAnalyze}
             disabled={loading}
-            className="mt-6 w-full bg-black text-white py-4 rounded-lg font-semibold hover:bg-gray-800"
+            className="mt-6 w-full bg-black text-white py-4 rounded-lg font-semibold hover:bg-gray-800 disabled:opacity-60"
           >
             {loading ? "Analyzing..." : "Analyze Resume"}
           </button>
@@ -119,6 +125,7 @@ export default function RecruitAIPage() {
         </div>
 
         {/* Result */}
+
         <div className="bg-white rounded-xl shadow border p-6">
 
           <h2 className="text-2xl font-semibold mb-5">
@@ -126,18 +133,25 @@ export default function RecruitAIPage() {
           </h2>
 
           {analysis ? (
+
             <div className="bg-gray-100 rounded-lg p-4 h-[500px] overflow-auto whitespace-pre-wrap">
               {analysis}
             </div>
+
           ) : (
+
             <div className="text-center mt-40 text-gray-400">
+
               <p className="text-xl">
                 Waiting for Resume...
               </p>
+
               <p>
                 Upload a PDF to begin analysis.
               </p>
+
             </div>
+
           )}
 
         </div>
