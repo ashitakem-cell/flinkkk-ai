@@ -8,6 +8,8 @@ export default function RecruitAIPage() {
   const [loading, setLoading] = useState(false);
 
   const handleAnalyze = async () => {
+    console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
+
     if (!file) {
       alert("Please select a resume first.");
       return;
@@ -19,15 +21,20 @@ export default function RecruitAIPage() {
     formData.append("resume", file);
 
     try {
-      const response = await fetch(
-  `${process.env.NEXT_PUBLIC_API_URL}/api/recruit/upload-resume`,
-  {
-    method: "POST",
-    body: formData,
-  }
-);
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/api/recruit/upload-resume`;
+
+      console.log("Sending request to:", url);
+
+      const response = await fetch(url, {
+        method: "POST",
+        body: formData,
+      });
+
+      console.log("Response Status:", response.status);
 
       const data = await response.json();
+
+      console.log("Response Data:", data);
 
       if (data.success) {
         setAnalysis(data.text);
@@ -35,7 +42,7 @@ export default function RecruitAIPage() {
         alert("Analysis failed");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Fetch Error:", error);
       alert("Backend connection failed");
     }
 
@@ -55,7 +62,6 @@ export default function RecruitAIPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
         {/* Upload Card */}
-
         <div className="bg-white rounded-xl shadow border p-6">
 
           <h2 className="text-2xl font-semibold mb-5">
@@ -70,8 +76,9 @@ export default function RecruitAIPage() {
               accept=".pdf"
               className="hidden"
               onChange={(e) => {
-                if (e.target.files)
+                if (e.target.files) {
                   setFile(e.target.files[0]);
+                }
               }}
             />
 
@@ -94,17 +101,11 @@ export default function RecruitAIPage() {
           </div>
 
           {file && (
-
             <div className="mt-5 text-green-600 font-medium">
-
               Selected File:
-
               <br />
-
               {file.name}
-
             </div>
-
           )}
 
           <button
@@ -112,51 +113,31 @@ export default function RecruitAIPage() {
             disabled={loading}
             className="mt-6 w-full bg-black text-white py-4 rounded-lg font-semibold hover:bg-gray-800"
           >
-
-            {loading
-              ? "Analyzing..."
-              : "Analyze Resume"}
-
+            {loading ? "Analyzing..." : "Analyze Resume"}
           </button>
 
         </div>
 
         {/* Result */}
-
         <div className="bg-white rounded-xl shadow border p-6">
 
           <h2 className="text-2xl font-semibold mb-5">
-
             Analysis Result
-
           </h2>
 
           {analysis ? (
-
             <div className="bg-gray-100 rounded-lg p-4 h-[500px] overflow-auto whitespace-pre-wrap">
-
               {analysis}
-
             </div>
-
           ) : (
-
             <div className="text-center mt-40 text-gray-400">
-
               <p className="text-xl">
-
                 Waiting for Resume...
-
               </p>
-
               <p>
-
                 Upload a PDF to begin analysis.
-
               </p>
-
             </div>
-
           )}
 
         </div>
